@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- <?xml-model href="schema-master/csl.rnc" type="application/relax-ng-compact-syntax"?> -->
+<?xml-model href="schema-master/csl.rnc" type="application/relax-ng-compact-syntax"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="note" default-locale="de-DE">
   <!--
 ================================================================================
@@ -14,7 +14,7 @@ INFORMATIONEN ZUM ZITIERSTIL
     <link href="http://www.zotero.org/styles/XXX" rel="self"/>
     <!-- URI of the style from which the current style is derived -->
     <link href="http://www.zotero.org/styles/XXX" rel="template"/>
-    <link href="dokumentatation auf der zfdg-seite?" rel="documentation"/>
+    <link href="http://www.zfdg.de/s-wie-style" rel="documentation"/>
     <author>
       <name>Timo Steyer</name>
       <email>steyer@hab.de</email>
@@ -35,22 +35,7 @@ INFORMATIONEN ZUM ZITIERSTIL
     <published>2012-05-28T14:00:00+00:00</published>
     <updated>2015-03-19T02:36:13+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-  <summary>Style for zfm. Zeitschrift für Medienwissenschaft. Citations in notes; no bibliography.
-    HINWEISE
-    ========
-    - Bei Artikeln (article-journal, article-magazine) muss der Verlagsort
-    (publisher-place) ins Zotero-Feld "Extra" eingetragen werden, und zwar
-    nach dem Muster "{:publisher-place: Drexel Hill, Pennsylvania}".
-    - Bei Filmen (motion_picture) muss das Produktionsland ins Zotero-Feld
-    "Extra" eingetragen werden, und zwar dem Muster "{:publisher-place: USA}".
-    - Das Originalpublikationsjahr muss ins Zotero-Feld "Extra" eingetragen
-    werden, und zwar nach dem Muster "{:original-date: 1964}".
-    - Für Reihen (collection) muss das gewünschte Präfix "Bd.", "Vol.", "Nr."
-    o.ä. für die "Nummer der Reihe" (collection-number) ins Zotero-Feld
-    "Nummer" eingetragen werden (nach dem Muster "Bd. 7").
-    - Um bei Beiträgen in Sammelbänden (chapter) mit demselben Autor und
-    Buchautor die Abkürzung "ders." zu erhalten, muss diese selbst
-    (statt des Namens) ins Zotero-Feld "Buchautor" eingetragen werden.</summary>
+  <summary>Style for Zeitschrift für digitale Geisteswissenschaften (ZfdG).</summary>
   </info>
   <locale xml:lang="de">
     <terms>
@@ -59,6 +44,7 @@ INFORMATIONEN ZUM ZITIERSTIL
       <term name="editor" form="short">Hg</term>
       <term name="editor" form="verb-short">Hg.&#160;v</term>
       <term name="translator" form="short">Übers</term>
+      <term name="edition" form="short">Auflage</term>
       <term name="translator" form="verb-short">Übers.&#160;v</term>
     </terms>
   </locale>
@@ -258,7 +244,7 @@ INFORMATIONEN ZUM ZITIERSTIL
       <if type="book">
         <text prefix=". " macro="edition"/>
         <text prefix=". " variable="publisher-place"/>
-        <date prefix=" " variable="issued">
+        <date prefix=". " variable="issued">
           <date-part name="year"/>
         </date>
         <date prefix=" [" variable="original-date" suffix="]">
