@@ -42,12 +42,13 @@ INFORMATIONEN ZUM ZITIERSTIL
       <term name="et-al">et al.</term>
     <!--  <term name="accessed">gesehen am</term>-->
       <term name="editor" form="short">Hg</term>
-      <term name="editor" form="verb-short">Hg.&#160;v</term>
+      <term name="editor" form="verb-short">Hg.&#160;von</term>
       <term name="translator" form="short">Übers</term>
       <term name="edition" form="short">Auflage</term>
       <term name="translator" form="verb-short">Übers.&#160;v</term>
     </terms>
   </locale>
+  
   <macro name="contributors-long">
     <choose>
       <if variable="author">
@@ -55,16 +56,6 @@ INFORMATIONEN ZUM ZITIERSTIL
           <name delimiter=" / " delimiter-precedes-last="always"/>
         </names>
       </if>
-      <else>
-        <choose>
-          <if type="book">
-            <names variable="editor">
-              <name delimiter=", " delimiter-precedes-last="always"/>
-              <label prefix=" (" form="short" suffix=".)"/>
-            </names>
-          </if>
-        </choose>
-      </else>
     </choose>
   </macro>
   <macro name="contributors-short">
@@ -78,7 +69,7 @@ INFORMATIONEN ZUM ZITIERSTIL
         <choose>
           <if type="book">
             <names variable="editor">
-              <name form="short" delimiter=", " delimiter-precedes-last="always"/>
+              <name form="short" delimiter=" / "  delimiter-precedes-last="always"/>
               <label prefix=" (" form="short" suffix=".)"/>
             </names>
           </if>
@@ -89,7 +80,7 @@ INFORMATIONEN ZUM ZITIERSTIL
   <macro name="secondary-contributors">
     <choose>
       <if variable="author" type="book" match="all">
-        <names variable="editor" delimiter=", ">
+        <names variable="editor" delimiter=" / ">
           <label form="verb-short" text-case="lowercase" suffix=". "/>
           <name delimiter=", " delimiter-precedes-last="always"/>
         </names>
@@ -126,14 +117,14 @@ INFORMATIONEN ZUM ZITIERSTIL
       <else-if type="article-journal article-magazine" match="any">
         <names variable="editor">
           <label form="verb-short" text-case="lowercase" suffix=". "/>
-          <name delimiter=", " delimiter-precedes-last="always"/>
+          <name delimiter=" /" delimiter-precedes-last="always"/>
         </names>
       </else-if>
     </choose>
   </macro>
   <macro name="secondary-collection-contributors">
     <names variable="collection-editor">
-      <name delimiter=", " delimiter-precedes-last="always"/>
+      <name delimiter=" / " delimiter-precedes-last="always"/>
     </names>
   </macro>
   <macro name="translatedby">
@@ -142,11 +133,21 @@ INFORMATIONEN ZUM ZITIERSTIL
       <name delimiter=", " delimiter-precedes-last="always"/>
     </names>
   </macro>
+  <macro name="editor">
+    <names variable="editor">
+      <label form="verb-short"  prefix=". " suffix=" "/>
+      <name delimiter=" / " delimiter-precedes-last="always"/>
+    </names>
+  </macro>
   <macro name="title-long">
     <group>
       <choose>
         <if type="book">
-          <text variable="title" form="long"/>
+          <text variable="title" form="long"></text>
+          
+              <text macro="editor"/>
+          
+         
         </if>
       </choose>
       <choose>        <if type="webpage">
@@ -269,7 +270,7 @@ INFORMATIONEN ZUM ZITIERSTIL
           <text variable="collection-title" prefix=" "></text>
           <text variable="volume" prefix=" "/>
           <date variable="issued" form="numeric" prefix=" ("   suffix=")"><date-part name="year"></date-part></date>
-          <text variable="issue" prefix=", H.&#160;"/>
+          <text variable="issue" prefix=". &#160;"/>
         </group>
         <text prefix=", " macro="secondary-container-contributors"/>
         <group prefix=", " delimiter=" ">
