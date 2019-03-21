@@ -46,6 +46,7 @@ INFORMATIONEN ZUM ZITIERSTIL
       <term name="translator" form="short">Übers</term>
       <term name="edition" form="short">Auflage</term>
       <term name="translator" form="verb-short">Übers.&#160;v</term>
+      <term name="volume" form="long">Bde.</term>
     </terms>
   </locale>
   
@@ -98,8 +99,8 @@ INFORMATIONEN ZUM ZITIERSTIL
         <choose>
           <if type="chapter">
             <names variable="editor">
+              <label prefix=" " form="verb-short" suffix=" "/>
               <name delimiter=" / " delimiter-precedes-last="always"/>
-              <label prefix=" (" form="short" suffix=".)"/>
             </names>
           </if>
         </choose>
@@ -144,15 +145,24 @@ INFORMATIONEN ZUM ZITIERSTIL
       <choose>
         <if type="book">
           <text variable="title" form="long"></text>
-          
               <text macro="editor"/>
-          
-         
         </if>
       </choose>
       <choose>        <if type="webpage">
           <text variable="title" form="long"/>
         </if>
+      </choose>
+      <choose>        <if type="personal_communication">
+        <text variable="title" form="long"/>
+      </if>
+      </choose>
+      <choose>        <if type="post-weblog">
+        <text variable="title" form="long"/>
+      </if>
+      </choose>
+      <choose>        <if type="chapter">
+        <text variable="title" form="long"/>
+      </if>
       </choose>
       <choose>
         <if type="article-journal">
@@ -188,18 +198,22 @@ INFORMATIONEN ZUM ZITIERSTIL
   </macro>
   <macro name="container">
     <choose>
-      <if type="chapter">
+      <if type="post-weblog">
+        <text prefix=" In: "  variable="container-title"/>
+      </if>
+    </choose>
         <choose>
-          <if variable="container-author editor" match="any">
-            <text term="in" suffix=": "/>
-          </if>
-        </choose>
-        <text macro="container-contributors" suffix=": "/>
-        <text variable="container-title"/>
+          <if type="chapter">
+            <choose>
+              <if variable="container-author editor" match="any">
+                <text variable="container-title" prefix="In: " suffix="."/>
+                <text macro="container-contributors"/>
+              </if>
+            </choose>
         <choose>
-          <if variable="volume">
-            <text prefix=". " term="volume" form="short" suffix=".&#160;"/>
-            <text variable="volume"/>
+          <if variable="number-of-volumes">
+            <text prefix=". " variable="number-of-volumes" suffix=" "/>
+            <text term="volume" form="long"/>  
           </if>
         </choose>
         <text prefix=" / " macro="secondary-container-contributors"/>
@@ -243,34 +257,47 @@ INFORMATIONEN ZUM ZITIERSTIL
   <macro name="issued">
     <choose>
       <if type="book">
+        <text prefix=". " suffix=" Bde"  variable="number-of-volumes"/>
         <text prefix=". " macro="edition"/>
+        <text prefix=" (" suffix=")" variable="collection-title"/>
         <text prefix=". " variable="publisher-place"/>
-        <date prefix=". " variable="issued">
+        <text prefix=". " suffix=". " variable="note"/>
+        <date prefix=" " variable="issued">
           <date-part name="year"/>
         </date>
         <date prefix=" [" variable="original-date" suffix="]">
           <date-part name="year"/>
         </date>
-        <text prefix=". (" macro="collection" suffix=")"/>
+        <text variable="volume" prefix=". Bd. "/>
       </if>
       <else-if type="chapter">
         <text prefix=". " macro="edition"/>
+        <text prefix=" (" suffix=")" variable="collection-title"/>
         <text prefix=". " variable="publisher-place"/>
         <date prefix=" " variable="issued">
           <date-part name="year"/>
         </date>
-        <text prefix=" (" macro="collection" suffix=")"/>
+      </else-if>
+      <else-if type="post-weblog">
+        <date prefix=". Blogbeitrag vom " variable="issued" form="numeric">
+          <date-part name="day"/>
+          <date-part name="month"/>
+          <date-part name="year"/>
+        </date>
+      </else-if>
+      <else-if type="webpage">
+        <text prefix=". In: " variable="container-title"/>
+        <date prefix=". " variable="issued">
+          <date-part name="month" suffix=" "/>
+          <date-part name="year"/>
+        </date>
       </else-if>
       <else-if type="article-journal article-magazine article-newspaper" match="any">
         <group prefix=" ">
-          <!--
-          <text prefix="Bd.&#160;" variable="volume"/>
-          <text prefix="Nr.&#160;" variable="issue"/>
-          -->
-          <text variable="collection-title" prefix=" "></text>
+          <text variable="collection-title" prefix=" In: "></text>
           <text variable="volume" prefix=" "/>
           <date variable="issued" form="numeric" prefix=" ("   suffix=")"><date-part name="year"></date-part></date>
-          <text variable="issue" prefix=". &#160;"/>
+          <text variable="issue" prefix=", &#160;"/>
         </group>
         <text prefix=", " macro="secondary-container-contributors"/>
         <group prefix=", " delimiter=" ">
@@ -279,12 +306,7 @@ INFORMATIONEN ZUM ZITIERSTIL
             <if variable="URL">
               <text value="dort datiert"/>
             </if>
-          </choose>
-          <!-- <date variable="issued" form="numeric">
-            <date-part name="day"/>
-            <date-part name="month"/>
-            <date-part name="year"/>
-          </date> -->
+          </choose>    
         </group>
       </else-if>
       <else>
@@ -308,13 +330,7 @@ INFORMATIONEN ZUM ZITIERSTIL
   </macro>
   <macro name="access">    <choose>
       <if variable="URL">
-    <!--    <text variable="note" suffix=": "></text> -->
         <text prefix=" " variable="URL" suffix="."/>    
-       <!--   <date variable="accessed">
-            <date-part name="day" form="numeric" suffix="."/>
-            <date-part name="month" form="numeric" suffix="."/>
-            <date-part name="year"/>
-          </date>-->
       </if>
     </choose>
   </macro>
@@ -348,78 +364,6 @@ INFORMATIONEN ZUM ZITIERSTIL
       </choose>
     </layout>
   </citation>
-  <!--<citation et-al-subsequent-min="2" et-al-subsequent-use-first="1" disambiguate-add-names="true">
-    <layout suffix="." delimiter="; ">
-      <choose>
-        <if position="ibid-with-locator">
-          <text term="ibid" text-case="capitalize-first" suffix="."/>
-          <text prefix=", " macro="citation-locator"/>
-        </if>
-        <else-if position="ibid">
-          <text term="ibid" text-case="capitalize-first" suffix="."/>
-        </else-if>
-        <else-if position="subsequent">
-          <choose>
-            <if type="motion_picture">
-              <text variable="title" form="long" font-style="italic"/>
-              <text prefix=", Regie: " macro="contributors-long"/>
-              <group prefix=", " delimiter=" ">
-                <text variable="publisher-place"/>
-                <date variable="issued">
-                  <date-part name="year"/>
-                </date>
-              </group>
-            </if>
-            <else>
-              <text macro="contributors-short" suffix=": "/>
-              <text macro="title-short"/>
-              <text prefix=", " macro="citation-locator"/>
-            </else>
-          </choose>
-        </else-if>
-        <else>
-          <choose>
-            <if type="motion_picture">
-              <text variable="title" form="long" font-style="italic"/>
-              <text prefix=", Regie: " macro="contributors-long"/>
-              <group prefix=", " delimiter=" ">
-                <text variable="publisher-place"/>
-                <date variable="issued">
-                  <date-part name="year"/>
-                </date>
-              </group>
-            </if>
-            <else>
-              <text macro="contributors-long" suffix=": "/>
-              <text macro="title-long"/>
-              <text prefix=". " macro="container"/>
-              <text macro="issued"/>
-              <text prefix=", " macro="pages"/>
-              <choose>
-                <if variable="page" type="chapter" match="all">
-                  <text prefix=", hier " macro="citation-locator"/>
-                </if>
-                <else-if variable="page" type="article-journal" match="all">
-                  <text prefix=", hier " macro="citation-locator"/>
-                </else-if>
-                <else-if variable="page" type="article-magazine" match="all">
-                  <text prefix=", hier " macro="citation-locator"/>
-                </else-if>
-                <else-if variable="page" type="article-newspaper" match="all">
-                  <text prefix=", hier " macro="citation-locator"/>
-                </else-if>
-                <else>
-                  <text prefix=", " macro="citation-locator"/>
-                </else>
-              </choose>
-              <text macro="access"/>
-              <text prefix=", " macro="translatedby"/>
-            </else>
-          </choose>
-        </else>
-      </choose>
-    </layout>
-  </citation> -->
   <!--
 ================================================================================
 ERSTELLUNG DES LITERATURVERZEICHNISSES
@@ -432,7 +376,7 @@ ERSTELLUNG DES LITERATURVERZEICHNISSES
     <layout suffix=".">
       <text macro="contributors-long" suffix=": "/>
       <text macro="title-long"/>
-      <text macro="container" prefix=". " suffix=". "/>
+      <text macro="container" prefix=". "/>
       <text macro="issued"/>
       <text macro="pages" prefix=", S. "/>
     <text macro="access" prefix=". "/>
