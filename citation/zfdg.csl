@@ -10,10 +10,9 @@ INFORMATIONEN ZUM ZITIERSTIL
     <title>Zeitschrift für digitale Geisteswissenschaften</title>
     <title-short>ZfdG</title-short>
     <!-- hier zoterodaten ergänzen -->
-    <id>http://www.zotero.org/styles/XXX</id>
-    <link href="http://www.zotero.org/styles/XXX" rel="self"/>
-    <!-- URI of the style from which the current style is derived -->
-    <link href="http://www.zotero.org/styles/XXX" rel="template"/>
+    <id>http://www.zotero.org/styles/zfdg</id>
+    <link href="http://www.zotero.org/styles/zfdg" rel="self"/>
+    <!-- URI of the style from which the current style is derived -->   
     <link href="http://www.zfdg.de/s-wie-style" rel="documentation"/>
     <author>
       <name>Timo Steyer</name>
@@ -30,10 +29,10 @@ INFORMATIONEN ZUM ZITIERSTIL
     </contributor>
     <category citation-format="note"/>
     <category field="humanities"/>
-    <category field="generic-base"/>
-    <!-- <issn>issn zfdg eintragen</issn>-->
-    <published>2012-05-28T14:00:00+00:00</published>
-    <updated>2015-03-19T02:36:13+00:00</updated>
+    <category field="generic-base"/>   
+    <published>2019-05-28T14:00:00+00:00</published>
+    <updated>2019-11-01T02:36:13+00:00</updated>
+    <issn>2510-1358</issn>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   <summary>Style for Zeitschrift für digitale Geisteswissenschaften (ZfdG).</summary>
   </info>
